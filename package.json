@@ -1,0 +1,9 @@
+{
+  "name": "tdmu-cloud-lab",
+  "version": "1.0.0",
+  "description": "Cloud Computing Lab 01 - TDMU",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  }
+}

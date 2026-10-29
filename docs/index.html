@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Cloud - TDMU Lab 01</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #243047;
+            line-height: 1.6;
+        }
+        header {
+            background: #173b80;
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+        header h1 { font-size: 38px; margin: 0; }
+        main { max-width: 960px; margin: 30px auto; padding: 0 18px; }
+        section {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 12px #0000000a;
+        }
+        h2 { color: #173b80; margin-top: 0; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
+        }
+        .item { background: #eef4ff; padding: 16px; border-radius: 8px; }
+        .item h3 { margin: 0 0 8px; color: #173b80; }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+        }
+        button {
+            background: #173b80;
+            color: white;
+            border: 0;
+            border-radius: 6px;
+            padding: 12px 20px;
+            margin-top: 12px;
+            cursor: pointer;
+        }
+        pre {
+            background: #172235;
+            color: #d8f4dd;
+            border-radius: 8px;
+            padding: 18px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+        footer { text-align: center; padding: 20px; color: #666; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>☁️ Hello Cloud</h1>
+        <p>Thực hành Điện toán đám mây - Lab 01</p>
+        <p>Trường Đại học Thủ Dầu Một</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>Giới thiệu</h2>
+            <p>Dự án minh họa môi trường phát triển trên đám mây
+               bằng GitHub Codespaces, Node.js và GitHub Pages.</p>
+            <p>API Hello Cloud cung cấp dữ liệu JSON qua HTTP.</p>
+        </section>
+
+        <section>
+            <h2>5 đặc tính điện toán đám mây theo NIST</h2>
+            <div class="grid">
+                <div class="item">
+                    <h3>1. On-demand self-service</h3>
+                    <p>Tự cấp phát tài nguyên theo nhu cầu mà không
+                       cần nhân viên nhà cung cấp thao tác trực tiếp.</p>
+                </div>
+                <div class="item">
+                    <h3>2. Broad network access</h3>
+                    <p>Truy cập tài nguyên qua mạng bằng các
+                       thiết bị và giao thức tiêu chuẩn.</p>
+                </div>
+                <div class="item">
+                    <h3>3. Resource pooling</h3>
+                    <p>Tài nguyên của nhà cung cấp được dùng chung
+                       và phân bổ động cho nhiều khách hàng.</p>
+                </div>
+                <div class="item">
+                    <h3>4. Rapid elasticity</h3>
+                    <p>Tài nguyên có thể mở rộng hoặc thu hẹp
+                       nhanh chóng theo nhu cầu sử dụng.</p>
+                </div>
+                <div class="item">
+                    <h3>5. Measured service</h3>
+                    <p>Việc sử dụng tài nguyên được đo lường,
+                       giám sát và báo cáo.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Kiểm thử Hello Cloud API</h2>
+            <p>Nhập địa chỉ API từ cổng 3000 của Codespaces:</p>
+            <input id="diaChiApi" placeholder="https://...app.github.dev/api/hello">
+            <button onclick="kiemTraApi()">Gọi API</button>
+            <pre id="ketQua">Chưa có kết quả.</pre>
+        </section>
+    </main>
+
+    <footer>TDMU - Cloud Computing Lab 01</footer>
+
+    <script>
+        async function kiemTraApi() {
+            const duongDan = document.getElementById("diaChiApi").value.trim();
+            const ketQua = document.getElementById("ketQua");
+
+            if (!duongDan) {
+                ketQua.textContent = "Vui lòng nhập URL API.";
+                return;
+            }
+
+            try {
+                const phanHoi = await fetch(duongDan);
+                if (!phanHoi.ok) throw new Error("HTTP " + phanHoi.status);
+                const duLieu = await phanHoi.json();
+                ketQua.textContent = JSON.stringify(duLieu, null, 2);
+            } catch (loi) {
+                ketQua.textContent = "Không thể kết nối API: " + loi.message;
+            }
+        }
+    </script>
+</body>
+</html>
